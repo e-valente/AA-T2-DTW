@@ -8,14 +8,16 @@
 #include <sstream>
 #include <string>
 #include <cstdlib>
-using namespace std;
+
 
 typedef std::vector< std::list<double> > Series;
+typedef std::vector< std::vector<double> > DTW;
 
 
 
 void readFile();
 void readData();
+double calcDTW();
 
 
 #endif // DTW_H
