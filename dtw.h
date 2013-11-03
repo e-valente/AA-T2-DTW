@@ -8,6 +8,8 @@
 #include <sstream>
 #include <string>
 #include <cstdlib>
+#include <math.h>
+#include <limits.h>
 
 
 typedef std::vector< std::list<double> > Series;

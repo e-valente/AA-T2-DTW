@@ -8,6 +8,7 @@ int main(int argc, char *argv[])
 {
     readFile();
     readData();
+    calcDTW();
 
 
     return 0;
