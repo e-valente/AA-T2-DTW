@@ -144,7 +144,7 @@ double calcDTW()
 
     //testaremos só a primeira séries
     //TAMANHO ESTA DANDO ERRADO
-    lengthMySeries = mySeries[0].size();
+    lengthMySeries = mySeries[5].size();
     lengthTemplateSeries = templateSeries[0].size();
 
     cout <<"tamanhos " << lengthMySeries << "  e " << lengthTemplateSeries << endl;
@@ -155,8 +155,9 @@ double calcDTW()
 
     //aloca as colunas da matriz
     for(int i = 0; i < lengthMySeries; i++)
-        //tamanho de cada serie do template
+    {   //tamanho de cada serie do template
         dtw[i].resize(lengthTemplateSeries);
+    }
 
     //inicia linhas com distancia ate o ponto
     //zero
@@ -164,7 +165,7 @@ double calcDTW()
     {
         //distancia de qualquer ponto
         // até o ponto zero é inf
-        dtw[i][0] = INT_MAX;
+        dtw[i][0] = 999;
 
     }
 
@@ -174,31 +175,43 @@ double calcDTW()
     {
         //distancia de qualquer ponto
         // até o ponto zero é inf
-        dtw[0][i] = INT_MAX;
+        dtw[0][i] = 999;
     }
 
 
     list<double>::iterator it1, it2;
 
-    it1 = mySeries[0].begin();
-    it2 = templateSeries[0].begin();
+    it1 = mySeries[5].begin();
 
     for(int i = 1; i < lengthMySeries -1; i++, it1++)
     {
-        for(int j = 1; j < lengthTemplateSeries -1; j++, it2++)
+        it2 = templateSeries[0].begin();
+
+        for(int j = 1; j < lengthTemplateSeries; j++, it2++)
         {
-            dtw[i][j] = labs(*it1 - *it2); //+ fmin(dtw[i-1][j], dtw[i-1][j-1]);
+
+           // cout <<"recebendo: " << fabs(*it1 - *it2) << endl;
+            //cout << "exc: " << myMin(dtw[i-1][j], dtw[i][j-1], dtw[i-1][j-1]) << endl;
+            //cout <<"i e j: " << i <<" "<< j << endl;
+
+
+            dtw[i][j] = fabs(*it1 - *it2) + myMin(dtw[i-1][j], dtw[i][j-1], dtw[i-1][j-1]);
+            printf("lendo: %lf\n", dtw[i][j]);
         }
     }
 
-    cout << "retornando: " << dtw[lengthMySeries][lengthTemplateSeries]<< endl;
+    cout << "retornando: " << dtw[lengthMySeries-2][lengthTemplateSeries-2]<< endl;
 
     //return dtw[lengthMySeries][lengthTemplateSeries];
 
     return 1.0;
 
 
+}
 
 
-
+//Funcoes auxiliares
+double myMin(double a, double b, double c)
+{
+    return min(min(a, b), c);
 }
