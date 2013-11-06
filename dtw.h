@@ -11,15 +11,17 @@
 #include <math.h>
 #include <limits.h>
 
+#define INFNT 1000
 
 typedef std::vector< std::list<double> > Series;
-typedef std::vector< std::vector<double> > DTW;
+typedef std::vector< std::vector<double> > DTWMatrix;
 
 
 //principais funcoes
 void readFile();
 void readData();
-double calcDTW();
+double calcDTW(int index_x, int index_y);
+void DTW();
 
 //funcoes auxiliares
 double myMin(double a, double b, double c);
