@@ -147,8 +147,9 @@ void DTW()
 
     totalHits = 0;
 
+    cout << " Error at: \n Serie number | Class Estimated | Correct Class " << endl;
     //series a serem testadas
-    for(int k = 0; k < 500; k++)
+    for(int k = 0; k < mySeries.size()-1; k++)
     {
         myMinDbl = INFINITY;
 
@@ -169,12 +170,13 @@ void DTW()
         correctClass = *it;
 
        if(myBestClass == correctClass)totalHits++;
-       else cout << " mybest class: " << myBestClass << " corretct class: " << correctClass << "mindbl " << myMinDbl << endl;
+       else cout << k << " " << myBestClass << " " << correctClass  << endl;
 
     }
 
-   cout <<"Total de acertos: " << totalHits << endl;
-   cout << " mybest class: " << myBestClass << " corretct class: " << correctClass << "mindbl " << myMinDbl << endl;
+    cout <<"Total de Séries: "<< mySeries.size() -1 <<"\nacertos: " << totalHits <<" -> "
+     <<(totalHits * 100)/(mySeries.size() -1) << "%" <<endl;
+
 }
 
 double calcDTW(int index_x, int index_y)
