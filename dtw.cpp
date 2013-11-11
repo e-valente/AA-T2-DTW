@@ -33,7 +33,7 @@ void readFile()
     infile.seekg(0, std::ios::beg);
 
     mySeries.resize(totalLines);
-    cout <<"total lines:" << totalLines << endl;
+    //cout <<"total lines:" << totalLines << endl;
 
     int i = 0;
     while(!infile.eof())
@@ -79,7 +79,7 @@ void readFile()
     infile.seekg(0, std::ios::beg);
 
     templateSeries.resize(totalLines);
-    cout <<"total lines:" << totalLines << endl;
+    //cout <<"total lines:" << totalLines << endl;
 
     i = 0;
     while(!infile.eof())
@@ -104,38 +104,7 @@ void readFile()
 
 }
 
-void readData()
-{
 
-    //percorrendo
-
-    list<double>::iterator it;
-
-    for(int i = 0; i < mySeries.size(); i++)
-    {
-        cout <<"serie " << i<<endl;
-        for(it = mySeries[i].begin(); it != mySeries[i].end(); it++)
-        {
-
-            cout << *it << " ";
-        }
-
-        cout << endl;
-    }
-
-    for(int i = 0; i < templateSeries.size(); i++)
-    {
-        cout <<"serie " << i<<endl;
-        for(it = templateSeries[i].begin(); it != templateSeries[i].end(); it++)
-        {
-
-            cout << *it << " ";
-        }
-
-        cout << endl;
-    }
-
-}
 
 void DTW()
 {
@@ -147,7 +116,9 @@ void DTW()
 
     totalHits = 0;
 
-    cout << " Error at: \n Serie number | Class Estimated | Correct Class " << endl;
+    //uncoment do get graph data
+    //cout << " Error at: \n Serie number | Class Estimated | Correct Class " << endl;
+
     //series a serem testadas
     for(int k = 0; k < mySeries.size()-1; k++)
     {
@@ -161,7 +132,6 @@ void DTW()
             {
                 it = templateSeries[i].begin();
                 myBestClass = *it;
-                //cout << "mybest class rcebendo: " << myBestClass << endl;
                 myMinDbl = myDbl;
             }
 
@@ -169,13 +139,13 @@ void DTW()
         it = mySeries[k].begin();
         correctClass = *it;
 
-       if(myBestClass == correctClass)totalHits++;
-       else cout << k << " " << myBestClass << " " << correctClass  << endl;
+        if(myBestClass == correctClass)totalHits++;
+        //   else cout << k << " " << myBestClass << " " << correctClass  << endl;
 
     }
 
     cout <<"Total de Séries: "<< mySeries.size() -1 <<"\nacertos: " << totalHits <<" -> "
-     <<(totalHits * 100)/(mySeries.size() -1) << "%" <<endl;
+        << std::setprecision(5)<< (totalHits * 100.0)/(mySeries.size() -1) << "%" <<endl;
 
 }
 
@@ -183,13 +153,8 @@ double calcDTW(int index_x, int index_y)
 {
     int lengthMySeries, lengthTemplateSeries;
 
-    //testaremos só a primeira séries
-    //TAMANHO ESTA DANDO ERRADO
     lengthMySeries = mySeries[index_x].size();
     lengthTemplateSeries = templateSeries[index_y].size();
-
-    //cout <<"tamanhos " << lengthMySeries << "  e " << lengthTemplateSeries << endl;
-   //cout <<"index x e y " << index_x << " " << index_y << endl;
 
 
     //aloca linhas
@@ -236,27 +201,46 @@ double calcDTW(int index_x, int index_y)
         it2++;
 
         for(int j = 1; j < lengthTemplateSeries; j++, it2++)
-        {
-
-            // cout <<"recebendo: " << fabs(*it1 - *it2) << endl;
-            //cout << "exc: " << myMin(dtw[i-1][j], dtw[i][j-1], dtw[i-1][j-1]) << endl;
-            //cout <<"it1 e it2 e j: " << *it1 <<" "<< *it2 << endl;
-
-
             dtwmatrix[i][j] = ((*it1 - *it2) * (*it1 - *it2)) + myMin(dtwmatrix[i-1][j], dtwmatrix[i][j-1], dtwmatrix[i-1][j-1]);
-            //printf("lendo: %lf\n", dtwmatrix[i][j]);
-        }
+
     }
 
-    //cout << "retornando: " << dtwmatrix[lengthMySeries-1][lengthTemplateSeries-1]<< endl;
 
     return dtwmatrix[lengthMySeries - 1][lengthTemplateSeries - 1];
 
+}
 
-    //retorna a classe calculada
 
-    //return 1.0;
+void readData()
+{
 
+    //percorrendo
+
+    list<double>::iterator it;
+
+    for(int i = 0; i < mySeries.size(); i++)
+    {
+        cout <<"serie " << i<<endl;
+        for(it = mySeries[i].begin(); it != mySeries[i].end(); it++)
+        {
+
+            cout << *it << " ";
+        }
+
+        cout << endl;
+    }
+
+    for(int i = 0; i < templateSeries.size(); i++)
+    {
+        cout <<"serie " << i<<endl;
+        for(it = templateSeries[i].begin(); it != templateSeries[i].end(); it++)
+        {
+
+            cout << *it << " ";
+        }
+
+        cout << endl;
+    }
 
 }
 

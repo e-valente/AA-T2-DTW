@@ -10,6 +10,7 @@
 #include <cstdlib>
 #include <math.h>
 #include <limits.h>
+#include <iomanip>
 
 #define INFNT 1000
 
